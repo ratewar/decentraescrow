@@ -49,8 +49,10 @@ io.sockets.on('connection', function(socket){
 	})
 });
 
-http.listen(2002, function(){
-  console.log('listening on *:2002');
+const port = process.env.PORT || 2002;
+
+http.listen(process.env.PORT || 2002, function(){
+  console.log(`Serve at http://localhost:${port}`);
 });
 
 setInterval(function(){
