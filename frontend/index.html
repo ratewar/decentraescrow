@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>DecentraLand Escrow - Buy/Sell NFT's</title>
+		<title>Escrow Metaverse- Buy/Sell NFT's</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<meta name="description" content="Blockland is a multi-player game. Using the Three.js library. author:Nik Lever ©2018 category:application-javascript" />
@@ -62,17 +62,62 @@
 				bottom: -40px;
 				transition: all 0.5s;
 			}
+			#btn-login{
+				position: absolute;
+				width: 180px;
+				height: 100px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 40px;
+				bottom: 130px;
+				border-radius: 20px;
+				background-color: darkblue;
+				color: white;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+			#btn-logout{
+				position: absolute;
+				width: 180px;
+				height: 100px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 40px;
+				bottom: 130px;
+				border-radius: 20px;
+				background-color: darkblue;
+				color: white;
+				left: 20%;
+				transform: translateX(-50%);
+			}
+			#instructions{
+				position:absolute;
+				bottom: 250px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 30px;
+				color: darkblue;
+				width: 300px;
+				left: 50%;
+				transform: translateX(-50%);
+				border-radius: 20px;
+				padding: 30px;
+				background-color: rgba(255, 255, 255, 0.5);
+				text-align: center;
+			}
 			form { background: #000; padding: 3px; width: 100%; }
-      		form input { border: 0; padding: 10px; width: 88%; margin-right: .5%; }
-      		form button { width: 8%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      		form input { border: 0; padding: 10px; width: 60%; margin-right: .5%; margin-left:.9%}
+      		form button { width: 8%; background: rgb(130, 224, 255); width: 10%; border: none; padding: 10px; }
 		</style>
 	</head>
 
 	<body>
+		
+		<p id="instructions" className="instructions">Welcome To Escrow Metaverse. Login, Meet New People, Click On User To Chat, Buy/Sell NFT's Using Our Escrow Contract</p>
+
 		<div id="message">
 			<p id="message_text"></p>
 			<button id="message_ok">OK</button>
 		</div>
+		<button id="btn-login" className="btn-login">Login</button>
+		<button id="btn-logout" className="btn-logout">Logout</button>
 		<div id="chat">
 			<form id="msg-form" action="">
       			<input id="m" autocomplete="off" /><button>Send</button>
@@ -81,12 +126,70 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js"></script>
 		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
-		
+		<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+		<script src="https://unpkg.com/moralis/dist/moralis.js"></script>
 		<script src= "libs/inflate.min.js"></script>
 		<script src="libs/FBXLoader.js"></script>
 		<script src="libs/Detector.js"></script>
 		<script src="libs/toon3d.js"></script>
 		<script src="game.js"></script>
+		<script>
+			/** Connect to Moralis server */
+			const serverUrl = "https://6110gtgzq8rd.usemoralis.com:2053/server";
+			const appId = "l6oUDmmFs35OpGrP1v1PVRPQbCcsJDAkTz1ZxscM";
+			Moralis.start({ serverUrl, appId });
+
+			const logoutbtn = document.getElementById('btn-logout');		
+			const loginbtn = document.getElementById('btn-login');
+			const instructions = document.getElementById('instructions');
+			logoutbtn.style.display = 'none';
+
+			let user = Moralis.User.current();
+
+			if(user){
+				loginbtn.style.display = 'none';
+				instructions.style.display ='none';
+				logoutbtn.style.display = 'block';
+			}
+
+			/** Add from here down */
+			async function login() {
+				if (typeof web3 == 'undefined'){
+					window.alert("Please Install Metamask Wallet In Your Browser");
+					return;
+				}
+				if (!user) {
+					try {
+						user = await Moralis.authenticate({signingMessage: "Welcome To Escrow Metaverse!" })
+						if(user) {
+							//Hide instruction and Buttons
+							loginbtn.style.display = 'none';
+							instructions.style.display ='none';
+							logoutbtn.style.display = 'block';
+							console.log(user)
+							console.log(user.get('ethAddress'))
+						}
+					} catch (error) {
+						loginbtn.style.display = 'block';
+						logoutbtn.style.display = 'none';
+						console.log(error)
+					}
+				}
+			}
+	
+			async function logOut() {
+				const loginbtn = document.getElementById('btn-login');
+				const logoutbtn = document.getElementById('btn-logout');
+				await Moralis.User.logOut();
+				console.log("logged out");
+				loginbtn.style.display = 'block';
+				logoutbtn.style.display = 'none';
+				location.reload();
+			}
+	
+			document.getElementById("btn-login").onclick = login;
+			document.getElementById("btn-logout").onclick = logOut;
+		</script>
 		<script>
 			var game;
 			document.addEventListener("DOMContentLoaded", function(){ game = new Game(); });
