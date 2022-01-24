@@ -142,7 +142,9 @@
 			const logoutbtn = document.getElementById('btn-logout');		
 			const loginbtn = document.getElementById('btn-login');
 			const instructions = document.getElementById('instructions');
+			const chatdiv = document.getElementById('chat');
 			logoutbtn.style.display = 'none';
+			chatdiv.style.display = 'none';
 
 			let user = Moralis.User.current();
 
@@ -166,12 +168,14 @@
 							loginbtn.style.display = 'none';
 							instructions.style.display ='none';
 							logoutbtn.style.display = 'block';
+							chatdiv.style.display = 'block';
 							console.log(user)
 							console.log(user.get('ethAddress'))
 						}
 					} catch (error) {
 						loginbtn.style.display = 'block';
 						logoutbtn.style.display = 'none';
+						chatdiv.style.display = 'none';
 						console.log(error)
 					}
 				}
@@ -184,6 +188,7 @@
 				console.log("logged out");
 				loginbtn.style.display = 'block';
 				logoutbtn.style.display = 'none';
+				chatdiv.style.display = 'none';
 				location.reload();
 			}
 	
