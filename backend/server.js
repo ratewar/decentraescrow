@@ -3,6 +3,24 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const path = require('path');
+const pinataSDK = require('@pinata/sdk');
+const multer = require('multer');
+const streamifier = require('streamifier');
+const cors=require("cors"); 
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+
+const pinata = pinataSDK(process.env.PINATAAPIID, process.env.PINATAAPIKEY);
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+const ipfsuri = "https://ipfs.io/ipfs/";
+
+app.use(cors({
+	credentials: true,
+	origin: "http://localhost:8080"
+  }));
 
 const dirname = path.resolve();
 
@@ -11,6 +29,64 @@ app.use(express.static(path.join(dirname, '/frontend/')));
 app.get('*',function(req, res) {
     res.sendFile(path.join(dirname, '/frontend/index.html'));
 });
+
+
+app.post('/nftwrite', upload.single('image'), function (req, res, next) {
+    const mystream = streamifier.createReadStream(req.file.buffer);
+
+    //file more than 1MB? Drop and exit!
+    if (Buffer.byteLength(req.file.buffer)>= 1000000){
+        res.status(500).send('Too big. Please keep to files below 1MB.');
+        return;
+    }
+    
+    mystream.path = req.file.originalname;
+    const options = {
+        pinataMetadata: {
+            name: req.file.originalname,
+        },
+        pinataOptions: {
+            cidVersion: 0
+        }
+    };
+
+    //pin the picture
+    pinata.pinFileToIPFS(mystream, options).then((result) => {
+        //construct the metadata
+        const body = {
+            "model": req.body.model,
+            "manufactured-date": req.body.manufactureddate,
+            "serial-number": req.body.serialnumber,
+            "photo": ipfsuri + result.IpfsHash
+        };
+        const options = {
+            pinataMetadata: {
+                name: req.body.serialnumber,
+            },
+            pinataOptions: {
+                cidVersion: 0
+            }
+        };
+        
+        console.log(result);
+
+        //pin the metadata
+        pinata.pinJSONToIPFS(body, options).then((result) => {
+            //ok done, return the hash to caller
+            console.log(result);
+            res.json({ IpfsHash: result.IpfsHash });
+        }).catch((err) => {
+            //handle error here
+            res.status(500).send('Something broke!')
+            console.log(err);
+            return;
+        });
+    }).catch((err) => {
+        res.status(500).send('Something broke!')
+        console.log(err);
+        return;
+    });
+  });
 
 io.sockets.on('connection', function(socket){
 	socket.userData = { x:0, y:0, z:0, heading:0 };//Default values;
