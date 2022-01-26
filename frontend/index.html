@@ -85,7 +85,7 @@
 				border-radius: 20px;
 				background-color: darkblue;
 				color: white;
-				left: 40%;
+				left: 10%;
 				top: 7%;
 				transform: translateX(-50%);
 			}
@@ -98,7 +98,7 @@
 				border-radius: 20px;
 				background-color: darkblue;
 				color: white;
-				left: 20%;
+				left: 25%;
 				top: 7%;
 				transform: translateX(-50%);
 			}
@@ -115,6 +115,20 @@
 				padding: 30px;
 				background-color: rgba(255, 255, 255, 0.5);
 				text-align: center;
+			}
+			#wallet{
+				position:absolute;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 15px;
+				color: darkblue;
+				width: 350px;
+				right: -10%;
+				top: 7%;
+				transform: translateX(-50%);
+				border-radius: 20px;
+				padding: 30px;
+				background-color: darkblue;
+				color: white;
 			}
 			form { background: #000; padding: 3px; width: 100%; }
       		form input { border: 0; padding: 10px; width: 60%; margin-right: .5%; margin-left:.9%}
@@ -133,7 +147,7 @@
 		<button id="btn-login" className="btn-login">Login</button>
 		<button id="btn-logout" className="btn-logout">Logout</button>
 		<button id="btn-nft" className="btn-nft">Mint NFT</button>
-
+		<p id="wallet" className="wallet"></p>
 		<div id="chat">
 			<form id="msg-form" action="">
       			<input id="m" autocomplete="off" /><button>Send</button>
@@ -168,12 +182,14 @@
 			const logoutbtn = document.getElementById('btn-logout');		
 			const loginbtn = document.getElementById('btn-login');
 			const nftbtn = document.getElementById('btn-nft');		
+			const walletp = document.getElementById('wallet');		
 
 			const instructions = document.getElementById('instructions');
 			const chatdiv = document.getElementById('chat');
 			logoutbtn.style.display = 'none';
 			nftbtn.style.display = 'none';
 			chatdiv.style.display = 'none';
+			walletp.style.display='none';
 
 			let user = Moralis.User.current();
 
@@ -182,6 +198,10 @@
 				instructions.style.display ='none';
 				logoutbtn.style.display = 'block';
 				nftbtn.style.display ='block';
+				walletp.style.display='block';
+				document.getElementById("wallet").innerText =
+         			"Address: " + user.get('ethAddress');
+						
 			}
 
 			/** Add from here down */
@@ -211,14 +231,18 @@
 							logoutbtn.style.display = 'block';
 							chatdiv.style.display = 'block';
 							nftbtn.style.display ='block';
+							walletp.style.display='block';
 							console.log(user)
 							console.log(user.get('ethAddress'))
+							document.getElementById("wallet").innerText =
+         			"Address: " + user.get('ethAddress');
 						}
 					} catch (error) {
 						loginbtn.style.display = 'block';
 						logoutbtn.style.display = 'none';
 						nftbtn.style.display ='none';
 						chatdiv.style.display = 'none';
+						walletp.style.display='none';
 						console.log(error)
 					}
 				}
@@ -233,6 +257,7 @@
 				logoutbtn.style.display = 'none';
 				nftbtn.style.display = 'none';
 				chatdiv.style.display = 'none';
+				walletp.style.display='none';
 				location.reload();
 			}
 	
@@ -777,10 +802,10 @@
 								];
 				const escrowAddress = "0x6b5b4c55b7C6Ed77B613D1e9eE6B70fbBF5D8Ee6"
 				const escrowContract = new ethers.Contract(escrowAddress, escrowAbi, signer);
- 				//var balance = await escrowContract.balanceOf(signer.getAddress());
-				//console.log(balance.toString());
 				var mintData = await escrowContract.mint(signer.getAddress(),"https://gateway.pinata.cloud/ipfs/QmUVyHE7rLa2SaHQingzHwNCTM5VaqisMHWYjAMjD84J2D");
-				window.alert("A New NFT Is Minted, Go to Metamask Import ENFT Token, Decimal Place 0, Contract Address 0x6b5b4c55b7C6Ed77B613D1e9eE6B70fbBF5D8Ee6")
+				window.alert("A New NFT Is Minted, Go to Metamask Import ENFT Token, Contract Address: 0x6b5b4c55b7C6Ed77B613D1e9eE6B70fbBF5D8Ee6, Symbol: ENFT , Decimal Places: 0")
+				var balance = await escrowContract.balanceOf(signer.getAddress());
+				window.alert("You Have Total " + balance.toString() + " ENFT's in your Wallet");
 			    
 			}
 			document.getElementById("btn-nft").onclick = getANFT;
