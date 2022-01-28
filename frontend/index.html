@@ -24,6 +24,9 @@
 				margin: 0px;
 				overflow: hidden;
 			}
+			form { background: #000; padding: 3px; width: 100%; }
+      		form input { border: 0; padding: 10px; width: 60%; margin-right: .5%; margin-left:.9%}
+      		form button { width: 8%; background: rgb(130, 224, 255); width: 10%; border: none; padding: 10px; }
 			#message{
 				position:absolute;
 				left: 50%;
@@ -78,9 +81,9 @@
 			#btn-logout{
 				position: absolute;
 				width: 180px;
-				height: 100px;
+				height: 50px;
 				font-family: 'RocknRoll One', sans-serif;
-				font-size: 40px;
+				font-size: 20px;
 				bottom: 130px;
 				border-radius: 20px;
 				background-color: darkblue;
@@ -92,14 +95,79 @@
 			#btn-nft{
 				position: absolute;
 				width: 180px;
-				height: 100px;
+				height: 50px;
 				font-family: 'RocknRoll One', sans-serif;
-				font-size: 40px;
+				font-size: 20px;
 				border-radius: 20px;
 				background-color: darkblue;
 				color: white;
-				left: 25%;
-				top: 7%;
+				left: 10%;
+				top: 14%;
+				transform: translateX(-50%);
+			}
+			#btn-seller{
+				position: absolute;
+				width: 180px;
+				height: 50px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 20px;
+				border-radius: 20px;
+				background-color: darkblue;
+				color: white;
+				left: 10%;
+				top: 21%;
+				transform: translateX(-50%);
+			}
+			#btn-buyer{
+				position: absolute;
+				width: 180px;
+				height: 50px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 20px;
+				border-radius: 20px;
+				background-color: darkblue;
+				color: white;
+				left: 10%;
+				top: 28%;
+				transform: translateX(-50%);
+			}
+			#btn-initiate{
+				position: absolute;
+				width: 180px;
+				height: 50px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 20px;
+				border-radius: 20px;
+				background-color: darkblue;
+				color: white;
+				left: 10%;
+				top: 35%;
+				transform: translateX(-50%);
+			}
+			#btn-deliver{
+				position: absolute;
+				width: 180px;
+				height: 50px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 20px;
+				border-radius: 20px;
+				background-color: darkblue;
+				color: white;
+				left: 10%;
+				top: 42%;
+				transform: translateX(-50%);
+			}
+			#wallet{
+				position:absolute;
+				width: 550px;
+				height: 50px;
+				font-family: 'RocknRoll One', sans-serif;
+				font-size: 20px;
+				border-radius: 20px;
+				background-color: darkblue;
+				color:white;
+				right: 1%;
+				top: 49%;
 				transform: translateX(-50%);
 			}
 			#instructions{
@@ -116,23 +184,61 @@
 				background-color: rgba(255, 255, 255, 0.5);
 				text-align: center;
 			}
-			#wallet{
-				position:absolute;
-				font-family: 'RocknRoll One', sans-serif;
-				font-size: 15px;
-				color: darkblue;
-				width: 350px;
-				right: -10%;
-				top: 7%;
-				transform: translateX(-50%);
-				border-radius: 20px;
-				padding: 30px;
-				background-color: darkblue;
-				color: white;
+			.modal{
+					display: none; /* Hidden by default */
+					position: fixed; /* Stay in place */
+					z-index: 1; /* Sit on top */
+					left: 0;
+					top: 0;
+					width: 100%; /* Full width */
+					height: 100%; /* Full height */
+					overflow: auto; /* Enable scroll if needed */
+					background-color: rgb(0,0,0); /* Fallback color */
+  					background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+				 }
+			.modal-header {
+					padding: 2px 16px;
+					background-color: black;
+					color: white;
+			 }	
+			.modal-body {
+					padding: 2px 16px;
+					background-color: black;
+					color: white;
 			}
-			form { background: #000; padding: 3px; width: 100%; }
-      		form input { border: 0; padding: 10px; width: 60%; margin-right: .5%; margin-left:.9%}
-      		form button { width: 8%; background: rgb(130, 224, 255); width: 10%; border: none; padding: 10px; }
+			.modal-footer {
+					padding: 2px 16px;
+					background-color: black;
+					color: white;
+			}
+			.modal-content {
+					background-color: black;
+					color: white;
+					margin: 15% auto; /* 15% from the top and centered */
+					padding: 20px;
+					border: 1px solid #888;
+					width: 30%; /* Could be more or less, depending on screen size */
+					height: 10%;
+					animation-name: animatetop;
+  					animation-duration: 0.4s
+				}
+			.close {
+ 						 color: #aaa;
+  						 float: right;
+  						 font-size: 28px;
+						 font-weight: bold;
+						}
+
+			.close:hover,
+			.close:focus {
+						color: black;
+						text-decoration: none;
+						cursor: pointer;
+						}	
+			@keyframes animatetop {
+ 						 from {top: -300px; opacity: 0}
+  					  	 to {top: 0; opacity: 1}
+			}				 
 		</style>
 	</head>
 
@@ -146,13 +252,34 @@
 		</div>
 		<button id="btn-login" className="btn-login">Login</button>
 		<button id="btn-logout" className="btn-logout">Logout</button>
-		<button id="btn-nft" className="btn-nft">Mint NFT</button>
+		<button id="btn-nft" className="btn-nft">Mint (E)NFT</button>
+		<button id="btn-seller" className="btn-seller">Seller Deposit (E)NFT</button>
+		<button id="btn-buyer" className="btn-buyer">Buyer Deposit AVAX</button>
+		<button id="btn-initiate" className="btn-initiate">Seller Initiate Delivery E(NFT)</button>
+		<button id="btn-deliver" className="btn-deliver">Buyer Confirm Delivery E(NFT)</button>
+
+
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div id="modal-content" class="modal-content">
+				<div class="modal-header">
+					<span class="close">&times;</span>
+					<h2 id="modal-header">Modal Header</h2>
+				  </div>
+				  <div id="modal-body" class="modal-body">
+				  </div>
+			</div>
+  		</div>
+		
 		<p id="wallet" className="wallet"></p>
 		<div id="chat">
 			<form id="msg-form" action="">
       			<input id="m" autocomplete="off" /><button>Send</button>
     		</form>
 		</div>
+		
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js"></script>
 		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
@@ -165,10 +292,6 @@
 		<script src="game.js"></script>
 		<script src="http://requirejs.org/docs/release/2.1.5/comments/require.js"></script>
 
-		<script>
-			
-			
-		</script>
 
 		<script type="module">
 
@@ -182,7 +305,12 @@
 			const logoutbtn = document.getElementById('btn-logout');		
 			const loginbtn = document.getElementById('btn-login');
 			const nftbtn = document.getElementById('btn-nft');		
-			const walletp = document.getElementById('wallet');		
+			const walletp = document.getElementById('wallet');
+			const sellerbutton = document.getElementById('btn-seller');	
+			const buyerbutton = document.getElementById('btn-buyer');	
+			const initiatebutton = document.getElementById('btn-initiate');	
+			const deliverbutton = document.getElementById('btn-deliver');	
+
 
 			const instructions = document.getElementById('instructions');
 			const chatdiv = document.getElementById('chat');
@@ -190,6 +318,10 @@
 			nftbtn.style.display = 'none';
 			chatdiv.style.display = 'none';
 			walletp.style.display='none';
+			sellerbutton.style.display='none';
+			buyerbutton.style.display='none';
+			initiatebutton.style.display='none';
+			deliverbutton.style.display='none';
 
 			let user = Moralis.User.current();
 
@@ -199,6 +331,11 @@
 				logoutbtn.style.display = 'block';
 				nftbtn.style.display ='block';
 				walletp.style.display='block';
+				chatdiv.style.display = 'block';
+				sellerbutton.style.display='block';
+				buyerbutton.style.display='block';
+				initiatebutton.style.display='block';
+				deliverbutton.style.display='block';
 				document.getElementById("wallet").innerText =
          			"Address: " + user.get('ethAddress');
 						
@@ -232,6 +369,10 @@
 							chatdiv.style.display = 'block';
 							nftbtn.style.display ='block';
 							walletp.style.display='block';
+							sellerbutton.style.display='block';
+							buyerbutton.style.display='block';
+							initiatebutton.style.display='block';
+							deliverbutton.style.display='block';
 							console.log(user)
 							console.log(user.get('ethAddress'))
 							document.getElementById("wallet").innerText =
@@ -243,6 +384,10 @@
 						nftbtn.style.display ='none';
 						chatdiv.style.display = 'none';
 						walletp.style.display='none';
+						sellerbutton.style.display='none';
+						buyerbutton.style.display='none';
+						initiatebutton.style.display='none';
+						deliverbutton.style.display='none';
 						console.log(error)
 					}
 				}
@@ -258,16 +403,19 @@
 				nftbtn.style.display = 'none';
 				chatdiv.style.display = 'none';
 				walletp.style.display='none';
+				sellerbutton.style.display='none';
+				buyerbutton.style.display='none';
+				initiatebutton.style.display='none';
+				deliverbutton.style.display='none';
 				location.reload();
 			}
 	
 			document.getElementById("btn-login").onclick = login;
 			document.getElementById("btn-logout").onclick = logOut;
-		</script>
-		<script type="module">
-			import { ethers } from "./libs/ethers-5.2.esm.min.js";
+	
+		
 
-			async function getANFT() {
+			
 				const provider = new ethers.providers.Web3Provider(window.ethereum);
 				const signer = provider.getSigner();
 
@@ -800,16 +948,520 @@
 										"type": "function"
 									}
 								];
-				const escrowAddress = "0x6b5b4c55b7C6Ed77B613D1e9eE6B70fbBF5D8Ee6"
-				const escrowContract = new ethers.Contract(escrowAddress, escrowAbi, signer);
+
+			const metaverseAbi = [
+									{
+										"inputs": [
+											{
+												"internalType": "address",
+												"name": "_NFTaddress",
+												"type": "address"
+											}
+										],
+										"stateMutability": "nonpayable",
+										"type": "constructor"
+									},
+									{
+										"anonymous": false,
+										"inputs": [
+											{
+												"indexed": true,
+												"internalType": "address",
+												"name": "previousOwner",
+												"type": "address"
+											},
+											{
+												"indexed": true,
+												"internalType": "address",
+												"name": "newOwner",
+												"type": "address"
+											}
+										],
+										"name": "OwnershipTransferred",
+										"type": "event"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "",
+												"type": "uint256"
+											},
+											{
+												"internalType": "address",
+												"name": "",
+												"type": "address"
+											}
+										],
+										"name": "buyerDeposit",
+										"outputs": [
+											{
+												"internalType": "uint256",
+												"name": "",
+												"type": "uint256"
+											}
+										],
+										"stateMutability": "view",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "",
+												"type": "uint256"
+											},
+											{
+												"internalType": "address",
+												"name": "",
+												"type": "address"
+											}
+										],
+										"name": "buyerSellerMap",
+										"outputs": [
+											{
+												"internalType": "address",
+												"name": "",
+												"type": "address"
+											}
+										],
+										"stateMutability": "view",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "_TokenID",
+												"type": "uint256"
+											}
+										],
+										"name": "cancelBeforeDelivery",
+										"outputs": [],
+										"stateMutability": "payable",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "_TokenID",
+												"type": "uint256"
+											}
+										],
+										"name": "canceldepositNFT",
+										"outputs": [],
+										"stateMutability": "nonpayable",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "_TokenID",
+												"type": "uint256"
+											}
+										],
+										"name": "checkDeposit",
+										"outputs": [
+											{
+												"internalType": "uint256",
+												"name": "balance",
+												"type": "uint256"
+											}
+										],
+										"stateMutability": "view",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "_TokenID",
+												"type": "uint256"
+											}
+										],
+										"name": "deliverNFT",
+										"outputs": [],
+										"stateMutability": "payable",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "_TokenID",
+												"type": "uint256"
+											}
+										],
+										"name": "depositAvax",
+										"outputs": [],
+										"stateMutability": "payable",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "_TokenID",
+												"type": "uint256"
+											}
+										],
+										"name": "depositNFT",
+										"outputs": [],
+										"stateMutability": "nonpayable",
+										"type": "function"
+									},
+									{
+										"inputs": [],
+										"name": "getContractBalance",
+										"outputs": [
+											{
+												"internalType": "uint256",
+												"name": "balance",
+												"type": "uint256"
+											}
+										],
+										"stateMutability": "view",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "_TokenID",
+												"type": "uint256"
+											}
+										],
+										"name": "initiateDelivery",
+										"outputs": [],
+										"stateMutability": "nonpayable",
+										"type": "function"
+									},
+									{
+										"inputs": [],
+										"name": "nftAddress",
+										"outputs": [
+											{
+												"internalType": "address",
+												"name": "",
+												"type": "address"
+											}
+										],
+										"stateMutability": "view",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "address",
+												"name": "operator",
+												"type": "address"
+											},
+											{
+												"internalType": "address",
+												"name": "from",
+												"type": "address"
+											},
+											{
+												"internalType": "uint256",
+												"name": "tokenId",
+												"type": "uint256"
+											},
+											{
+												"internalType": "bytes",
+												"name": "data",
+												"type": "bytes"
+											}
+										],
+										"name": "onERC721Received",
+										"outputs": [
+											{
+												"internalType": "bytes4",
+												"name": "",
+												"type": "bytes4"
+											}
+										],
+										"stateMutability": "nonpayable",
+										"type": "function"
+									},
+									{
+										"inputs": [],
+										"name": "owner",
+										"outputs": [
+											{
+												"internalType": "address",
+												"name": "",
+												"type": "address"
+											}
+										],
+										"stateMutability": "view",
+										"type": "function"
+									},
+									{
+										"inputs": [],
+										"name": "renounceOwnership",
+										"outputs": [],
+										"stateMutability": "nonpayable",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "uint256",
+												"name": "",
+												"type": "uint256"
+											}
+										],
+										"name": "sellerDeposit",
+										"outputs": [
+											{
+												"internalType": "address",
+												"name": "",
+												"type": "address"
+											}
+										],
+										"stateMutability": "view",
+										"type": "function"
+									},
+									{
+										"inputs": [
+											{
+												"internalType": "address",
+												"name": "newOwner",
+												"type": "address"
+											}
+										],
+										"name": "transferOwnership",
+										"outputs": [],
+										"stateMutability": "nonpayable",
+										"type": "function"
+									}
+								];
+
+			
+			const escrowAddress = "0x599e9622e8a90073d6bF5Dfb687f8E2316Ff903d"; //"0x6b5b4c55b7C6Ed77B613D1e9eE6B70fbBF5D8Ee6"
+			const escrowContract = new ethers.Contract(escrowAddress, escrowAbi, signer);
+			
+			const metaverseAddress = "0x95827eCc143CA134764f416f17028F07dc5946aA"//"0x0E13b1c9a5DB526f8f7B29E427B656cD11B5b729";
+			const metaverseContract = new ethers.Contract(metaverseAddress, metaverseAbi, signer);
+
+
+			async function getANFT() {		
+				document.getElementById("btn-nft").disabled = true;
+				document.getElementById("btn-nft").innerHTML = 'Wait...';
+				document. getElementById('btn-nft').style.backgroundColor = 'Red';
 				var mintData = await escrowContract.mint(signer.getAddress(),"https://gateway.pinata.cloud/ipfs/QmUVyHE7rLa2SaHQingzHwNCTM5VaqisMHWYjAMjD84J2D");
-				window.alert("A New NFT Is Minted, Go to Metamask Import ENFT Token, Contract Address: 0x6b5b4c55b7C6Ed77B613D1e9eE6B70fbBF5D8Ee6, Symbol: ENFT , Decimal Places: 0")
+				await mintData.wait();
+				window.alert("A New NFT Is Minted, Go to Metamask Import ENFT Token, Contract Address: 0x599e9622e8a90073d6bF5Dfb687f8E2316Ff903d, Symbol: ENFT , Decimal Places: 0")
 				var balance = await escrowContract.balanceOf(signer.getAddress());
 				window.alert("You Have Total " + balance.toString() + " ENFT's in your Wallet");
-			    
+				document.getElementById("btn-nft").disabled = false;
+				document.getElementById("btn-nft").innerHTML = 'Mint NFT';
+				document. getElementById('btn-nft').style.backgroundColor = "#00008B";
 			}
+
+			function approveAndDepositNFT(){				
+				callContract("Approve & Deposit Your (E)NFT To Escrow Contract","DN");
+					//var approve = await escrowContract.approve(metaverseAddress,0);
+					//await approve.wait();
+					//var deposit = await metaverseContract.depositNFT(0);
+					//await deposit.wait();
+			}
+
+			function depositAvax(){
+				callContract("Deposit Collateral In Escrow Contract For Seller (E)NFT","DA");
+				//var deposit = await metaverseContract.depositAvax(0,{ value: ethers.utils.parseEther("0.1") });
+				//await deposit.wait();
+			}
+
+			function checkDeposit(){
+
+				callContract("Initiate Delivery Of (E)NFT To Buyer","DI");
+				//var balance = await metaverseContract.checkDeposit(0); //issue in code
+				//window.alert("Balance In Escrow Contract:"+balance.toString());
+				//var startDelivery = await metaverseContract.initiateDelivery(0);
+				//await startDelivery.wait();
+				//window.alert("NFT Delivery Initiated");
+			}
+
+
+			function deliverNFT(){
+				callContract("Confirm Delivery Buyer Get E(NFT), Seller Get AVAX","ND");
+				//var deliver = await metaverseContract.deliverNFT(0);
+				//await deliver.wait();
+				//window.alert("NFT Delivered and AVAX Transfered To Accounts");
+			}
+
+			async function callContract(headerData, flag) {
+
+					// Get the modal
+					var modal = document.getElementById("myModal");
+
+					// Get the <span> element that closes the modal
+					var span = document.getElementsByClassName("close")[0];
+
+					// When the user clicks on the button, open the modal
+
+					modal.style.display = "block";
+
+
+					// When the user clicks on <span> (x), close the modal
+					span.onclick = function() {
+						modal.style.display = "none";
+					}
+
+					// When the user clicks anywhere outside of the modal, close it
+					window.onclick = function(event) {
+						if (event.target == modal) {
+							modal.style.display = "none";
+						}
+					}
+
+					document.getElementById("modal-header").innerHTML=headerData;
+
+
+					// create new text box control below using attribute of input type text box and assign name and id dynamically by using variable i defined as global variable above.
+
+					var textbox = document.createElement("input");
+					textbox.type= "text";
+					textbox.name= "txt_deposit";
+					textbox.id= "txt_deposit";
+					textbox.placeholder ="E(NFT) Token Number";
+
+
+					var btn = document.createElement("input");
+					btn.type = "button";
+					btn.name = "btnDeposit";
+					btn.value = "Submit";
+					btn.id = "btnDeposit";
+
+					btn.onclick = async function(event) {
+
+
+						if(flag=="DA"){
+							//Validation 	
+							if(isNaN(document.getElementById("txt_deposit").value) || document.getElementById("txt_deposit").value.trim()==="")
+							{
+								window.alert("Please Enter A Valid Token No");	
+								return;
+							}
+
+							try{
+								var deposit = await metaverseContract.depositAvax(document.getElementById("txt_deposit").value.trim(),{ value: ethers.utils.parseEther("0.2") });
+								await deposit.wait();
+								window.alert("0.2 AVAX Deposited For Token");	
+							} catch(err)
+							{
+								window.alert(err.data.message);		
+							}
+
+												
+						}
+
+						if(flag=="DN"){
+							//Validation 	
+							if(isNaN(document.getElementById("txt_deposit").value)  || document.getElementById("txt_deposit").value.trim()==="")
+							{
+								window.alert("Please Enter A Valid Token No");	
+								return;
+							}
+
+							// Pulling all NFT from Moralis Avax Not working)
+							//const testnetNFTs = Moralis.Web3.getNFTs({ chain: 'Ropsten' });
+							//console.log(testnetNFTs);
+
+							try{
+								var approve = await escrowContract.approve(metaverseAddress,document.getElementById("txt_deposit").value.trim());
+								approve.wait();
+								var deposit = await metaverseContract.depositNFT(document.getElementById("txt_deposit").value.trim());
+								await deposit.wait();
+								window.alert("E(NFT) SuccessFully Deposited In Escrow MetaVerse Contract");		
+							}
+							catch(err)
+							{
+								window.alert(err.data.message);		
+							}
+											
+						}
+
+						if(flag=="DI"){
+							//Validation 	
+							if(isNaN(document.getElementById("txt_deposit").value) || document.getElementById("txt_deposit").value.trim()==="")
+							{
+								window.alert("Please Enter A Valid Token No");	
+								return;
+							}
+
+							try{
+								var balance = await metaverseContract.checkDeposit(document.getElementById("txt_deposit").value); //issue in code
+								window.alert(balance.toString());
+								if(balance){
+									window.alert("Buyer Transferred Balance In Escrow Contract, Initiating Transfer:" + balance.toString());
+									var startDelivery = await metaverseContract.initiateDelivery(document.getElementById("txt_deposit").value);
+									await startDelivery.wait();
+									window.alert("(E)NFT Delivery Initiated, Message Buyer To Approve!");
+								} else {
+									window.alert("Buyer Has Not Yet Transferred Balance In Escrow Contract");
+								}
+								
+							}
+							catch(err){
+								window.alert(err.data.message);
+							}
+							
+						}
+
+						if(flag=="ND"){
+							//Validation 	
+							if(isNaN(document.getElementById("txt_deposit").value) || document.getElementById("txt_deposit").value.trim()==="")
+							{
+								window.alert("Please Enter A Valid Token No");	
+								return;
+							}
+
+							try{
+									var deliver = await metaverseContract.deliverNFT(document.getElementById("txt_deposit").value);
+									await deliver.wait();
+									window.alert("(E)NFT Delivered To You & AVAX Transfered To Seller, Check Your Accounts");
+							} catch(err){
+								window.alert(err.data.message);
+							}
+
+											
+						}
+
+					}
+
+					var span = document.createElement("span");
+
+
+					function removeAllChildNodes(parent) {
+    				while (parent.firstChild) {
+        				parent.removeChild(parent.firstChild);
+    				}
+					}
+					const container = document.querySelector('#modal-body');
+					removeAllChildNodes(container);
+
+
+					document.getElementById("modal-body").appendChild(textbox);
+					document.getElementById("modal-body").appendChild(span);
+					document.getElementById("modal-body").appendChild(btn);
+
+			}
+
+		
+
+
 			document.getElementById("btn-nft").onclick = getANFT;
+			document.getElementById("btn-seller").onclick = approveAndDepositNFT;
+			document.getElementById("btn-buyer").onclick = depositAvax;
+			document.getElementById("btn-initiate").onclick = checkDeposit;
+			document.getElementById("btn-deliver").onclick = deliverNFT;
+			
 		</script>
+		
 		<script>
 			var game;
 			document.addEventListener("DOMContentLoaded", function(){ game = new Game(); });
