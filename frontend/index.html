@@ -1395,7 +1395,6 @@
 
 							try{
 								var balance = await metaverseContract.checkDeposit(document.getElementById("txt_deposit").value); //issue in code
-								window.alert(balance.toString());
 								if(balance){
 									window.alert("Buyer Transferred Balance In Escrow Contract, Initiating Transfer:" + balance.toString());
 									var startDelivery = await metaverseContract.initiateDelivery(document.getElementById("txt_deposit").value);
