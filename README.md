@@ -1,7 +1,7 @@
 # decentraescrow
 An Escrow Metaverse For Moralis Hackathon
 
-[![Metaverse](https://img.youtube.com/vi/n8xoBIX-fLk/0.jpg)](https://www.youtube.com/watch?v=Yn8xoBIX-fLk)
+[![Metaverse](https://img.youtube.com/vi/n8xoBIX-fLk/0.jpg)](https://youtu.be/n8xoBIX-fLk)
 
 
 Game is deployed here https://decentralandescrow.herokuapp.com/
